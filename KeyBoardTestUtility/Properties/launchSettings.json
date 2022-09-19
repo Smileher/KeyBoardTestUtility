@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "KeyBoardTestUtility (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "KeyBoardTestUtility (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

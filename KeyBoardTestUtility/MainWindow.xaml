@@ -1,0 +1,16 @@
+﻿<Window
+    x:Class="KeyBoardTestUtility.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KeyBoardTestUtility"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <StackPanel Name="KeyBoard" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Button x:Name="Esc">Esc</Button>
+        <Button x:Name="A">A</Button>
+        <Button x:Name="S">S</Button>
+        <Button x:Name="D">D</Button>
+        <TextBlock Name="tb" Text="{Binding a}">123</TextBlock>
+    </StackPanel>
+</Window>
