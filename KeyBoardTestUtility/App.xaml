@@ -8,6 +8,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
                 <!-- Other merged dictionaries here -->
+            <ResourceDictionary Source="/Styles/Key.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <!-- Other app resources here -->
             <!-- 右上角按键的背景色设置为透明 -->

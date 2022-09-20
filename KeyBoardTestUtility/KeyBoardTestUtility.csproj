@@ -17,6 +17,7 @@
   <ItemGroup>
     <None Remove="MainPage.xaml" />
     <None Remove="MainWindow.xaml" />
+    <None Remove="Styles\Key.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Page Remove="MainWindow.xaml" />
@@ -48,6 +49,11 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Styles\Key.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

@@ -6,11 +6,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}">
     <Page.Resources>
-        <Style x:Key="KeyButton" TargetType="Button" >
+        <Style x:Key="KeyButton" TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}" >
             <Setter Property="Height" Value="45"></Setter>
             <Setter Property="Width" Value="45"></Setter>
+            <Setter Property="Margin" Value="1"></Setter>
         </Style>
     </Page.Resources>
     <Grid>
@@ -142,7 +143,6 @@
                 <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_39_EX">→</Button>
                 <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_96">0</Button>
                 <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_110">.</Button>
-
             </StackPanel>
         </StackPanel>
         <StackPanel Orientation="Horizontal">

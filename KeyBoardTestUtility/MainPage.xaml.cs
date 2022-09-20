@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using Microsoft.UI;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
@@ -6,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
+using Windows.ApplicationModel.Core;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 
@@ -31,7 +33,6 @@ namespace KeyBoardTestUtility
             if(btn != null)
             {
                 btn.Tag = 2;
-                //btn.Style = (Style)Resources["AccentButtonStyle"]; 
                 btn.Background = new SolidColorBrush((Color)Resources["SystemAccentColor"]);
             }
         }
@@ -79,7 +80,7 @@ namespace KeyBoardTestUtility
             {
                 if (item is Button)
                 {
-                    item.Background = (new Button()).Background;
+                    item.Style = (Style)Resources["KeyButton"];
                     item.Tag = 0;
                 }
             }
