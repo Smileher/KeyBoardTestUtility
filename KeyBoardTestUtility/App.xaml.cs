@@ -1,23 +1,6 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using Microsoft.UI.Xaml.Shapes;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.ApplicationModel;
-using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
+using Windows.UI.ViewManagement;
 
 namespace KeyBoardTestUtility
 {
@@ -26,6 +9,7 @@ namespace KeyBoardTestUtility
     /// </summary>
     public partial class App : Application
     {
+        KeyboardHock keyboardHock;
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -34,18 +18,46 @@ namespace KeyBoardTestUtility
         {
             this.InitializeComponent();
         }
-
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="args">Details about the launch request and process.</param>
-        protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+        protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
-            m_window = new MainWindow();
+            m_window = new Window();
+            m_window.Content = GetMainPageInstance();
+            m_window.Activated += M_window_Activated;
+            m_window.Closed += M_window_Closed;
+            keyboardHock = new KeyboardHock();
+            keyboardHock.HookStart();
             m_window.Activate();
         }
+        private void M_window_Closed(object sender, WindowEventArgs args)
+        {
+            keyboardHock.HookStop();
+        }
 
-        private Window m_window;
+        private void M_window_Activated(object sender, WindowActivatedEventArgs args)
+        {
+            if (args.WindowActivationState == WindowActivationState.Deactivated)//窗口后台
+            {
+                keyboardHock.HookStop();
+            }
+            else
+            {
+                keyboardHock.HookStart();
+            }
+        }
+        private static Window m_window;
+        private static MainPage s_Instance = null;
+        public static MainPage GetMainPageInstance()
+        {
+            if (s_Instance == null)
+            {
+                s_Instance = new MainPage(m_window);
+            }
+            return s_Instance;
+        }
     }
 }
