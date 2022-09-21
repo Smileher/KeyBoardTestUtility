@@ -44,7 +44,6 @@ namespace KeyBoardTestUtility
             {
                 btn.Tag = 1;
                 btn.Background = new SolidColorBrush((Color)Resources["SystemAccentColorDark2"]);
-                //btn.Background = new SolidColorBrush(uisetting.GetColorValue(UIColorType.AccentDark2));
             }
 
         }
@@ -80,7 +79,7 @@ namespace KeyBoardTestUtility
             {
                 if (item is Button)
                 {
-                    item.Style = (Style)Resources["KeyButton"];
+                    item.Background = new SolidColorBrush(uisetting.GetColorValue(UIColorType.Background));
                     item.Tag = 0;
                 }
             }
