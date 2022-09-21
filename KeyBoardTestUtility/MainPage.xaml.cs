@@ -25,6 +25,7 @@ namespace KeyBoardTestUtility
             window.ExtendsContentIntoTitleBar = true;
             window.SetTitleBar(AppTitleBar);
             uisetting = new UISettings();
+            this.MinWidth = KeyBoard.ActualWidth;
         }
         public void KeyUpOp(string vkCode)
         {
@@ -80,6 +81,7 @@ namespace KeyBoardTestUtility
                 if (item is Button)
                 {
                     item.Background = Templete.Background;
+                    //item.Style = (Style)Resources["DefaultButtonStyle"];
                     //item.Background = new SolidColorBrush(uisetting.GetColorValue(UIColorType.Background));
                     item.Tag = 0;
                 }

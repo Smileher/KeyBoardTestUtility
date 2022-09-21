@@ -20,134 +20,145 @@
                 <TextBlock VerticalAlignment="Top" Margin="5" Text="KeyBoard Test Utility" />
             </Border>
         </Grid>
-        <StackPanel Name="KeyBoard" Margin="0,50,0,0" Orientation="Vertical">
-            <!--row1-->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_27">Esc</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_112">F1</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_113">F2</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_114">F3</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_115">F4</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_116">F5</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_117">F6</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_118">F7</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_119">F8</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_120">F9</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_121">F10</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_122">F11</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_123">F12</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_44_EX">PrintScreen</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_145">ScrollLock</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_19">PauseBreak</Button>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="100"></RowDefinition>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Name="KeyBoard" Margin="10,50,10,0" Padding="5" Orientation="Vertical" CornerRadius="5" BorderThickness="1" BorderBrush="LightGray">
+                <!--row1-->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_27">Esc</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_112">F1</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_113">F2</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_114">F3</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_115">F4</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_116">F5</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_117">F6</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_118">F7</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_119">F8</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_120">F9</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_121">F10</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_122">F11</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_123">F12</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_44_EX">PrintScreen</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_145">ScrollLock</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_19">PauseBreak</Button>
+                </StackPanel>
+                <!--row2-->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_192">~</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_49">1</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_50">2</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_51">3</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_52">4</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_53">5</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_54">6</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_55">7</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_56">8</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_57">9</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_48">0</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_189">-</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_187">=</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_8">Backspace</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_45_EX">Insert</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_36_EX">Home</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_33_EX">PageUp</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_144">NumLock</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_111">/</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_106">*</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_109">-</Button>
+                </StackPanel>
+                <!--row3-->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_9">Tab</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_81">Q</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_87">W</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_69">E</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_82">R</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_84">T</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_89">Y</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_85">U</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_73">I</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_79">O</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_80">P</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_219">[</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_221">]</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_220">\</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_46_EX">Delete</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_35_EX">End</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_34_EX">PageDown</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_103">7</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_104">8</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_105">9</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_107">+</Button>
+                </StackPanel>
+                <!--row4-->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_20">CapsLock</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_65">A</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_83">S</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_68">D</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_70">F</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_71">G</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_72">H</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_74">J</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_75">K</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_76">L</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_186">;</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_222">'</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_13">Enter</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_100">4</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_101">5</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_102">6</Button>
+                </StackPanel>
+                <!--row5-->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_160">Shift</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_90">Z</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_88">X</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_67">C</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_86">V</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_66">B</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_78">N</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_77">M</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_188">,</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_190">.</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_191">/</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_161">Shift</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_38_EX">↑</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_97">1</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_98">2</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_99">3</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_13_EX">Enter</Button>
+                </StackPanel>
+                <!--row6-->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_162">Ctrl</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_91">Win</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_164">Alt</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_32">Space</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_165">Alt</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_92">Win</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_93">Menu</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_163">Ctrl</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_37_EX">←</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_40_EX">↓</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_39_EX">→</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_96">0</Button>
+                    <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_110">.</Button>
+                </StackPanel>
             </StackPanel>
-            <!--row2-->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_192">~</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_49">1</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_50">2</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_51">3</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_52">4</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_53">5</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_54">6</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_55">7</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_56">8</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_57">9</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_48">0</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_189">-</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_187">=</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_8">Backspace</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_45_EX">Insert</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_36_EX">Home</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_33_EX">PageUp</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_144">NumLock</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_111">/</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_106">*</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_109">-</Button>
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10,10,10,10">
+                <TextBlock VerticalAlignment="Center" Margin="5">主题：</TextBlock>
+                <ComboBox VerticalAlignment="Center" Margin="5" Width="130">
+                    <ComboBoxItem>浅色</ComboBoxItem>
+                    <ComboBoxItem>深色</ComboBoxItem>
+                    <ComboBoxItem IsSelected="True">跟随系统</ComboBoxItem>
+                </ComboBox>
+                <Button x:Name="Clear" Click="Clear_Click" Margin="5" VerticalAlignment="Center" Style="{StaticResource AccentButtonStyle}" >清除</Button>
+                <Button x:Name="Templete" Visibility="Collapsed"></Button>
             </StackPanel>
-            <!--row3-->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_9">Tab</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_81">Q</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_87">W</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_69">E</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_82">R</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_84">T</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_89">Y</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_85">U</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_73">I</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_79">O</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_80">P</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_219">[</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_221">]</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_220">\</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_46_EX">Delete</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_35_EX">End</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_34_EX">PageDown</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_103">7</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_104">8</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_105">9</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_107">+</Button>
-            </StackPanel>
-            <!--row4-->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_20">CapsLock</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_65">A</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_83">S</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_68">D</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_70">F</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_71">G</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_72">H</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_74">J</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_75">K</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_76">L</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_186">;</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_222">'</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_13">Enter</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_100">4</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_101">5</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_102">6</Button>
-            </StackPanel>
-            <!--row5-->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_160">Shift</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_90">Z</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_88">X</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_67">C</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_86">V</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_66">B</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_78">N</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_77">M</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_188">,</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_190">.</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_191">/</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_161">Shift</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_38_EX">↑</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_97">1</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_98">2</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_99">3</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_13_EX">Enter</Button>
-
-            </StackPanel>
-            <!--row6-->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_162">Ctrl</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_91">Win</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_164">Alt</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_32">Space</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_165">Alt</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_92">Win</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_93">Menu</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_163">Ctrl</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_37_EX">←</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_40_EX">↓</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_39_EX">→</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_96">0</Button>
-                <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_110">.</Button>
-            </StackPanel>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <Button x:Name="Clear" Click="Clear_Click" Style="{StaticResource AccentButtonStyle}" >清除</Button>
-            <Button x:Name="Templete" Visibility="Collapsed"></Button>
-        </StackPanel>
+        </Grid>
     </Grid>
 </Page>
