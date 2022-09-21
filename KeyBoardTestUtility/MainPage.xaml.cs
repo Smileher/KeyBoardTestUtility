@@ -79,7 +79,8 @@ namespace KeyBoardTestUtility
             {
                 if (item is Button)
                 {
-                    item.Background = new SolidColorBrush(uisetting.GetColorValue(UIColorType.Background));
+                    item.Background = Templete.Background;
+                    //item.Background = new SolidColorBrush(uisetting.GetColorValue(UIColorType.Background));
                     item.Tag = 0;
                 }
             }

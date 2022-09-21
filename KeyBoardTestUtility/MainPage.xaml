@@ -147,6 +147,7 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <Button x:Name="Clear" Click="Clear_Click" Style="{StaticResource AccentButtonStyle}" >清除</Button>
+            <Button x:Name="Templete" Visibility="Collapsed"></Button>
         </StackPanel>
     </Grid>
 </Page>
