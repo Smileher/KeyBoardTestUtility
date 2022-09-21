@@ -7,7 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
+using System.Xml.Linq;
 using Windows.ApplicationModel.Core;
+using Windows.Storage;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 
@@ -19,8 +21,10 @@ namespace KeyBoardTestUtility
     public sealed partial class MainPage : Page
     {
         UISettings uisetting = null;
+        Window m_Window;
         public MainPage(Window window)
         {
+            m_Window = window;
             this.InitializeComponent();
             window.ExtendsContentIntoTitleBar = true;
             window.SetTitleBar(AppTitleBar);
@@ -31,7 +35,7 @@ namespace KeyBoardTestUtility
         {
             //Debug.WriteLine("键盘抬起了" + vkCode);
             var btn = FindChild<Button>(KeyBoard, "VKCODE_" + vkCode);
-            if(btn != null)
+            if (btn != null)
             {
                 btn.Tag = 2;
                 btn.Background = new SolidColorBrush((Color)Resources["SystemAccentColor"]);
@@ -99,6 +103,16 @@ namespace KeyBoardTestUtility
                     results.Add(asType);
                 }
                 FindChildren<T>(results, current);
+            }
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.RemovedItems.Count > 0)
+            {
+                var selectedTheme = ((ComboBoxItem)(((ComboBox)sender).SelectedItem)).Tag.ToString();
+                ElementTheme elementTheme = (ElementTheme)Enum.Parse(typeof(ElementTheme), selectedTheme);
+                this.RequestedTheme = elementTheme;
             }
         }
     }

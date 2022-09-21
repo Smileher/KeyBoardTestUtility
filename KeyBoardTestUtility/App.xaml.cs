@@ -1,5 +1,7 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System.Reflection;
+using System;
 using Windows.UI.ViewManagement;
 
 namespace KeyBoardTestUtility

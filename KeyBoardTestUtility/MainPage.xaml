@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.Resources>
         <Style x:Key="KeyButton" TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}" >
             <Setter Property="Height" Value="45"></Setter>
@@ -151,10 +151,10 @@
             </StackPanel>
             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10,10,10,10">
                 <TextBlock VerticalAlignment="Center" Margin="5">主题：</TextBlock>
-                <ComboBox VerticalAlignment="Center" Margin="5" Width="130">
-                    <ComboBoxItem>浅色</ComboBoxItem>
-                    <ComboBoxItem>深色</ComboBoxItem>
-                    <ComboBoxItem IsSelected="True">跟随系统</ComboBoxItem>
+                <ComboBox VerticalAlignment="Center" Margin="5" Width="130" SelectionChanged="ComboBox_SelectionChanged">
+                    <ComboBoxItem Tag="Light">浅色</ComboBoxItem>
+                    <ComboBoxItem Tag="Dark">深色</ComboBoxItem>
+                    <ComboBoxItem Tag="Default" IsSelected="True">跟随系统</ComboBoxItem>
                 </ComboBox>
                 <Button x:Name="Clear" Click="Clear_Click" Margin="5" VerticalAlignment="Center" Style="{StaticResource AccentButtonStyle}" >清除</Button>
                 <Button x:Name="Templete" Visibility="Collapsed"></Button>
