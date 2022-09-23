@@ -14,16 +14,20 @@
             <Setter Property="Margin" Value="1"></Setter>
         </Style>
     </Page.Resources>
-    <Grid>
-        <Grid>
+    <Grid Height="400">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" VerticalAlignment="Top">
             <Border x:Name="AppTitleBar" Height="48" VerticalAlignment="Top">
                 <TextBlock VerticalAlignment="Top" Margin="5" Text="KeyBoard Test Utility" />
             </Border>
         </Grid>
-        <Grid>
+        <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition Height="100"></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Name="KeyBoard" Margin="10,50,10,0" Padding="5" Orientation="Vertical" CornerRadius="5" BorderThickness="1" BorderBrush="LightGray">
                 <!--row1-->
