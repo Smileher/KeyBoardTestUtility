@@ -29,7 +29,7 @@
                             <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_119">F8</Button>
                             <TextBlock Width="32"></TextBlock>
                             <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_120">F9</Button>
-                            <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_121">F10</Button>
+                            <Button Style="{StaticResource KeyButtonNoPadding}" x:Name="VKCODE_121">F10</Button>
                             <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_122">F11</Button>
                             <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_123">F12</Button>
                             <TextBlock Width="32"></TextBlock>
@@ -189,7 +189,7 @@
                         <TextBlock Height="69"></TextBlock>
                         <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_109">-</Button>
                         <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_107" Height="94">+</Button>
-                        <Button Style="{StaticResource KeyButton}" x:Name="VKCODE_13_EX" Height="94" FontSize="12">Enter</Button>
+                        <Button Style="{StaticResource KeyButtonNoPadding}" x:Name="VKCODE_13_EX" Height="94" FontSize="12">Enter</Button>
                     </StackPanel>
                 </StackPanel>
             </Viewbox>

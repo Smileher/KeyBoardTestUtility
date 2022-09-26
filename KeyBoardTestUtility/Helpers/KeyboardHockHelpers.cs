@@ -37,6 +37,9 @@ internal class KeyboardHockHelpers
     // 取得当前线程编号（线程钩子需要用到）
     [DllImport("kernel32.dll")]
     static extern int GetCurrentThreadId();
+    public static EventHandler<KeyPressedEventArgs>? KeyDownEventHandler;
+    public static EventHandler<KeyPressedEventArgs>? KeyUpEventHandler;
+
     //钩子子程：就是钩子所要做的事情
     private int KeyboardHookProc(int nCode, Int32 wParam, IntPtr lParam)
     {
@@ -51,14 +54,16 @@ internal class KeyboardHockHelpers
             if (wParam == 0x100 || wParam == 0x104)
             {
                 // 键盘按下
-                Debug.WriteLine("键盘按下-flag:" + m.flags + "---m_vkCode:" + m.vkCode + "---vkCode:" + vkCode);
+                //Debug.WriteLine("键盘按下-flag:" + m.flags + "---m_vkCode:" + m.vkCode + "---vkCode:" + vkCode);
                 //App.GetMainPageInstance().KeyDownOp(vkCode);
+                KeyDownEventHandler?.Invoke(vkCode, new KeyPressedEventArgs());
             }
             else if (wParam == 0x101)
             {
                 // 键盘抬起
-                Debug.WriteLine("键盘抬起-flag:" + m.flags + "---m_vkCode:" + m.vkCode + "---vkCode:" + vkCode);
+                //Debug.WriteLine("键盘抬起-flag:" + m.flags + "---m_vkCode:" + m.vkCode + "---vkCode:" + vkCode);
                 //App.GetMainPageInstance().KeyUpOp(vkCode);
+                KeyUpEventHandler?.Invoke(vkCode, new KeyPressedEventArgs());
             }
             //Debug.WriteLine(wParam);
             /****************
@@ -170,5 +175,9 @@ internal class KeyboardHockHelpers
         }
         if (!(retKeyboard))
             throw new Exception("UnhookWindowsHookEx failed.");
+    }
+
+    public class KeyPressedEventArgs
+    {
     }
 }
