@@ -116,7 +116,7 @@ namespace KeyBoardTestUtility
                 this.RequestedTheme = elementTheme;
 
                 var bar = GetAppWindowTitleBar();
-                bar.ResetToDefault();
+                //bar.ResetToDefault();
                 if (RequestedTheme == ElementTheme.Light)
                 {
                     //bar.ButtonPressedBackgroundColor = Colors.Gray;
