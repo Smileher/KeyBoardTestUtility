@@ -20,6 +20,7 @@ namespace KeyBoardTestUtility
         {
             this.InitializeComponent();
         }
+        private static Window m_window;
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
@@ -51,7 +52,6 @@ namespace KeyBoardTestUtility
                 keyboardHock.HookStart();
             }
         }
-        private static Window m_window;
         private static MainPage s_Instance = null;
         public static MainPage GetMainPageInstance()
         {

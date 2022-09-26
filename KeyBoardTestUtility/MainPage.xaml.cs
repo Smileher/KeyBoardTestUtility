@@ -1,4 +1,5 @@
 ﻿using Microsoft.UI;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
@@ -7,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
+using System.Threading;
 using System.Xml.Linq;
 using Windows.ApplicationModel.Core;
 using Windows.Storage;
@@ -21,7 +23,7 @@ namespace KeyBoardTestUtility
     public sealed partial class MainPage : Page
     {
         UISettings uisetting = null;
-        Window m_Window;
+        public static Window m_Window;
         public MainPage(Window window)
         {
             m_Window = window;
@@ -29,7 +31,6 @@ namespace KeyBoardTestUtility
             window.ExtendsContentIntoTitleBar = true;
             window.SetTitleBar(AppTitleBar);
             uisetting = new UISettings();
-            this.MinWidth = KeyBoard.ActualWidth;
         }
         public void KeyUpOp(string vkCode)
         {
@@ -113,7 +114,27 @@ namespace KeyBoardTestUtility
                 var selectedTheme = ((ComboBoxItem)(((ComboBox)sender).SelectedItem)).Tag.ToString();
                 ElementTheme elementTheme = (ElementTheme)Enum.Parse(typeof(ElementTheme), selectedTheme);
                 this.RequestedTheme = elementTheme;
+
+                var bar = GetAppWindowTitleBar();
+                bar.ResetToDefault();
+                if (RequestedTheme == ElementTheme.Light)
+                {
+                    //bar.ButtonPressedBackgroundColor = Colors.Gray;
+                    //bar.ExtendsContentIntoTitleBar = true;
+                }
+                else
+                {
+                    //appWindow.TitleBar.ButtonForegroundColor = Colors.DarkGray;
+                }
+                //AppTitleBar.RequestedTheme = ElementTheme.Dark;
             }
+        }
+        public static AppWindowTitleBar GetAppWindowTitleBar()
+        {
+            var windowHandle = WinRT.Interop.WindowNative.GetWindowHandle(m_Window);
+            var windowId = Win32Interop.GetWindowIdFromWindow(windowHandle);
+            var appWindow = AppWindow.GetFromWindowId(windowId);
+            return appWindow.TitleBar;
         }
     }
 }
