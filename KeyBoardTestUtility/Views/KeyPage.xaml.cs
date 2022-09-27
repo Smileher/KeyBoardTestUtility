@@ -1,11 +1,11 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
-using System.Reflection.Emit;
 using KeyBoardTestUtility.Helpers;
 using KeyBoardTestUtility.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Navigation;
 using Windows.UI;
 
 namespace KeyBoardTestUtility.Views;
@@ -16,15 +16,14 @@ public sealed partial class KeyPage : Page
     {
         get;
     }
-
     public KeyPage()
     {
+        this.NavigationCacheMode = NavigationCacheMode.Required;
         ViewModel = App.GetService<KeyViewModel>();
         InitializeComponent();
         KeyboardHockHelpers.KeyDownEventHandler += OnKeyDown;
         KeyboardHockHelpers.KeyUpEventHandler += OnKeyUp;
     }
-
     private void Clear_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
     {
         var AllButtons = new List<Button>();
@@ -34,13 +33,14 @@ public sealed partial class KeyPage : Page
             if (item is Button)
             {
                 item.Background = Templete.Background;
+                item.Tag = null;
             }
         }
     }
     private void FindAllChildren<T>(List<T> results, DependencyObject startNode) where T : DependencyObject
     {
-        int count = VisualTreeHelper.GetChildrenCount(startNode);
-        for (int i = 0; i < count; i++)
+        var count = VisualTreeHelper.GetChildrenCount(startNode);
+        for (var i = 0; i < count; i++)
         {
             DependencyObject current = VisualTreeHelper.GetChild(startNode, i);
             if ((current.GetType()).Equals(typeof(T)) || (current.GetType().GetTypeInfo().IsSubclassOf(typeof(T))))
@@ -57,7 +57,6 @@ public sealed partial class KeyPage : Page
         var btn = FindChild<Button>(KeyBoard, "VKCODE_" + sender);
         if (btn != null)
         {
-            btn.Tag = 2;
             btn.Background = new SolidColorBrush((Color)Resources["SystemAccentColor"]);
         }
     }
@@ -67,7 +66,6 @@ public sealed partial class KeyPage : Page
         var btn = FindChild<Button>(KeyBoard, "VKCODE_" + sender);
         if (btn != null)
         {
-            btn.Tag = 1;
             btn.Background = new SolidColorBrush((Color)Resources["SystemAccentColorDark2"]);
         }
     }
@@ -98,4 +96,28 @@ public sealed partial class KeyPage : Page
         }
         return null;
     }
+    //protected override void OnNavigatedFrom(NavigationEventArgs e)
+    //{
+    //    //base.OnNavigatedFrom(e);
+    //    //switch (e.NavigationMode)
+    //    //{
+    //    //    case NavigationMode.Back:
+    //    //        {
+    //    //            NavigationCacheMode = NavigationCacheMode.Disabled;
+    //    //            break;
+    //    //        }
+    //    //}
+    //}
+    //protected override void OnNavigatedTo(NavigationEventArgs e)
+    //{
+    //    base.OnNavigatedTo(e);
+    //    switch (e.NavigationMode)
+    //    {
+    //        case NavigationMode.Back:
+    //            {
+    //                NavigationCacheMode = NavigationCacheMode.Disabled;
+    //                break;
+    //            }
+    //    }
+    //}
 }

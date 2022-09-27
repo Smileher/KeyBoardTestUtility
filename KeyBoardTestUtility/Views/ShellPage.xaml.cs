@@ -40,7 +40,7 @@ public sealed partial class ShellPage : Page
 
     private void MainWindow_Closed(object sender, WindowEventArgs args) 
     {
-        
+        KeyboardHockHelpers.GetInstance().HookStop();
     }
 
     private void OnLoaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
@@ -60,14 +60,10 @@ public sealed partial class ShellPage : Page
         if (args.WindowActivationState == WindowActivationState.Deactivated)//窗口后台
         {
             KeyboardHockHelpers.GetInstance().HookStop();
-            //keyboardHock.HookStop();
-            Debug.WriteLine("");
         }
         else
         {
             KeyboardHockHelpers.GetInstance().HookStart();
-            Debug.WriteLine("");
-            //keyboardHock.HookStart();
         }
     }
 

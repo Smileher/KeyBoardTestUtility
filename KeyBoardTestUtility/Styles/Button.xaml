@@ -6,11 +6,9 @@
         <Setter Property="Width" Value="45"></Setter>
         <Setter Property="Margin" Value="2"></Setter>
     </Style>
-    <Style x:Key="KeyButtonNoPadding" TargetType="Button" BasedOn="{StaticResource KeyButton}" >
-        <Setter Property="Padding" Value="0"></Setter>
-    </Style>
-    <Style TargetType="TextBlock" x:Key="CustomTextBlockStyle">
+    <Style x:Key="CustomTextBlockStyle" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="Comic Sans MS"/>
         <Setter Property="FontStyle" Value="Italic"/>
     </Style>
+
 </ResourceDictionary>

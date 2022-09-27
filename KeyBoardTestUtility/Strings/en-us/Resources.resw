@@ -145,12 +145,18 @@
     <value>About this application</value>
   </data>
   <data name="Settings_AboutDescription.Text" xml:space="preserve">
-    <value>This application can be used to test whether there is a problem with the keyboard keys, or to test the keyboard combination keys that are not 100% configured. (She gave her girlfriend a 61 key keyboard. She often forgot how to use some combination keys, so she developed this application (* ^ _ ^ *).)</value>
+    <value>This application can be used to test whether there is a problem with the keyboard keys, or to test the keyboard combination keys that are not 100% configured. </value>
   </data>
   <data name="SettingsPage_PrivacyTermsLink.Content" xml:space="preserve">
     <value>Github</value>
   </data>
   <data name="SettingsPage_PrivacyTermsLink.NavigateUri" xml:space="preserve">
     <value>https://github.com/Smileher/KeyBoardTestUtility</value>
+  </data>
+  <data name="Settings_AboutDescription2.Text" xml:space="preserve">
+    <value>I gave my girlfriend a 60% keyboard. She often forgot how to use some combination keys, so I developed this application (* ^ _ ^ *).</value>
+  </data>
+  <data name="KeyPage_Clear.Content" xml:space="preserve">
+    <value>Clear Records</value>
   </data>
 </root>

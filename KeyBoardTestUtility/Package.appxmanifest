@@ -7,16 +7,17 @@
   xmlns:genTemplate="http://schemas.microsoft.com/appx/developer/templatestudio"
   xmlns:com="http://schemas.microsoft.com/appx/manifest/com/windows10"
   xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
-  IgnorableNamespaces="uap rescap genTemplate">
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  IgnorableNamespaces="uap rescap genTemplate mp">
 
   <Identity
-    Name="CC015226-9799-455D-8D10-8EF2360DA02B"
-    Publisher="CN=CH-HTHT"
-    Version="1.0.0.0" />
+    Name="54317Smileher.KeyBoardTestUtility"
+    Publisher="CN=426E8CF5-3861-440D-B400-CDB0323C5FD4"
+    Version="2.0.0.0" />
 
   <Properties>
     <DisplayName>KeyBoardTestUtility</DisplayName>
-    <PublisherDisplayName>CH-HTHT</PublisherDisplayName>
+    <PublisherDisplayName>Smileher</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

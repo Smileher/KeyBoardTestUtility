@@ -145,12 +145,18 @@
     <value>关于此应用</value>
   </data>
   <data name="Settings_AboutDescription.Text" xml:space="preserve">
-    <value>该应用可以测试键盘按键是否有问题，也可用于测试非100%配列的键盘组合按键。(送给女朋友了一把61键的键盘，她经常忘记一些组合键是怎么用的，故开发了此应用(*^_^*)。)</value>
+    <value>该应用可以测试键盘按键是否有问题，也可用于测试非100%配列的键盘组合按键。</value>
   </data>
   <data name="SettingsPage_PrivacyTermsLink.Content" xml:space="preserve">
     <value>Github</value>
   </data>
   <data name="SettingsPage_PrivacyTermsLink.NavigateUri" xml:space="preserve">
     <value>https://github.com/Smileher/KeyBoardTestUtility</value>
+  </data>
+  <data name="Settings_AboutDescription2.Text" xml:space="preserve">
+    <value>送给女朋友了一把60%配列的键盘，她经常忘记一些组合键是怎么用的，故开发了此应用(*^_^*)。</value>
+  </data>
+  <data name="KeyPage_Clear.Content" xml:space="preserve">
+    <value>清除记录</value>
   </data>
 </root>
