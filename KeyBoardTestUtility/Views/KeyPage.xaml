@@ -7,10 +7,14 @@
     mc:Ignorable="d">
     <Grid x:Name="ContentArea">
         <Grid.RowDefinitions>
+            <RowDefinition Height="28"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="48"></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
+        <Grid Grid.Row="0" HorizontalAlignment="Center">
+            <TextBlock x:Uid="AppPageTitle" FontSize="18"></TextBlock>
+        </Grid>
+        <Grid Grid.Row="1">
             <Viewbox Grid.Row="0" Stretch="Fill">
                 <StackPanel Name="KeyBoard" Orientation="Horizontal" Margin="5" Padding="5" CornerRadius="5" BorderThickness="1" BorderBrush="LightGray">
                     <StackPanel Orientation="Vertical">
@@ -194,8 +198,8 @@
                 </StackPanel>
             </Viewbox>
         </Grid>
-        <Grid Grid.Row="1">
-            <Button HorizontalAlignment="Left" x:Uid="KeyPage_Clear" x:Name="Clear" Click="Clear_Click" Margin="5" Width="90" Style="{StaticResource AccentButtonStyle}"/>
+        <Grid Grid.Row="2">
+            <Button HorizontalAlignment="Left" x:Uid="KeyPage_Clear" x:Name="Clear" Click="Clear_Click" Margin="5" Width="140" Style="{StaticResource AccentButtonStyle}"/>
             <Button HorizontalAlignment="Left" x:Name="Templete" Visibility="Collapsed"></Button>
             <TextBlock HorizontalAlignment="Right" Margin="5" VerticalAlignment="Center" Style="{StaticResource CustomTextBlockStyle}" Foreground="{StaticResource SystemAccentColor}">Smileher</TextBlock>
         </Grid>

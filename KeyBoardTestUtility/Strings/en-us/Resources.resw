@@ -159,4 +159,7 @@
   <data name="KeyPage_Clear.Content" xml:space="preserve">
     <value>Clear Records</value>
   </data>
+  <data name="AppPageTitle.Text" xml:space="preserve">
+    <value>Please operate your physical keyboard</value>
+  </data>
 </root>

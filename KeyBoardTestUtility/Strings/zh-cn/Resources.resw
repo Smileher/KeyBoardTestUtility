@@ -139,7 +139,7 @@
     <value>深色</value>
   </data>
   <data name="Settings_Theme_Default.Content" xml:space="preserve">
-    <value>自定义</value>
+    <value>跟随主题</value>
   </data>
   <data name="Settings_About.Text" xml:space="preserve">
     <value>关于此应用</value>
@@ -158,5 +158,8 @@
   </data>
   <data name="KeyPage_Clear.Content" xml:space="preserve">
     <value>清除记录</value>
+  </data>
+  <data name="AppPageTitle.Text" xml:space="preserve">
+    <value>请操作您的实体键盘</value>
   </data>
 </root>

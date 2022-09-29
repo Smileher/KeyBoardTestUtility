@@ -44,9 +44,6 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
-          <desktop:Extension Category="windows.toastNotificationActivation">
-              <desktop:ToastNotificationActivation ToastActivatorCLSID="0A2A5E0F-6C05-4985-87E3-B1EB9599832F" />
-          </desktop:Extension>
 
           <com:Extension Category="windows.comServer">
               <com:ComServer>
