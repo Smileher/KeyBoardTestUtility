@@ -3,6 +3,6 @@
 Click the badge below to jump to the Windows Store - 点击下方徽章跳转Windows商店
 <br />
 <br />
-<a href="ms-windows-store://pdp/?ProductId=9NKRGTGGQWSD&mode=mini">
+<a href="https://www.microsoft.com/store/apps/9NKRGTGGQWSD"  target="_blank">
    <img src="https://getbadgecdn.azureedge.net/images/en-us%20dark.svg" alt="Download Discord" />
 </a>
