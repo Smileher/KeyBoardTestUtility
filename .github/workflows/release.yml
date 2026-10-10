@@ -121,7 +121,9 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ github.ref_name }}
         run: |
-          ./scripts/bundle-store.ps1 -InputDirectory store-packages -OutputDirectory store-output
+          New-Item -ItemType Directory -Path store-input -Force | Out-Null
+          Get-ChildItem -LiteralPath store-packages -Filter '*.msix' -File -Recurse | Copy-Item -Destination store-input
+          ./scripts/bundle-store.ps1 -InputDirectory store-input -OutputDirectory store-output
           $files = Get-ChildItem -LiteralPath store-output -File
           gh release upload "$env:TAG" @($files.FullName) --clobber
           if ($LASTEXITCODE -ne 0) { throw 'Store bundle upload failed' }
