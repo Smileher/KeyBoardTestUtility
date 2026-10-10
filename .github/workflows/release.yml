@@ -1,0 +1,107 @@
+name: Release
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: node scripts/check-version.mjs
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+      - name: Prepare draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          version="${TAG#v}"
+          test -s "docs/releases/$version.md"
+          if gh release view "$TAG" --json isDraft > release-state.json 2>/dev/null; then
+            node -e "if (!require('./release-state.json').isDraft) throw new Error('Published releases cannot be overwritten')"
+          else
+            gh release create "$TAG" --draft --title "KeyBoardTestUtility $TAG" --notes-file "docs/releases/$version.md" --target "$GITHUB_SHA"
+          fi
+  build:
+    needs: prepare
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+            arch: x64
+          - os: windows-latest
+            target: aarch64-pc-windows-msvc
+            arch: arm64
+          - os: macos-latest
+            target: aarch64-apple-darwin
+            arch: apple-silicon
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: '11.19.0'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: pnpm
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri -> target
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test
+      - run: cargo test --locked --manifest-path src-tauri/Cargo.toml
+      - name: Build Windows portable
+        if: runner.os == 'Windows'
+        run: ./scripts/build-portable.ps1 -Architecture '${{ matrix.arch }}'
+        shell: pwsh
+      - name: Upload Windows ZIP and checksum
+        if: runner.os == 'Windows'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          $version = (Get-Content -LiteralPath package.json -Raw -Encoding UTF8 | ConvertFrom-Json).version
+          $files = Get-ChildItem -LiteralPath "artifacts/$version" -File | Where-Object { $_.Name -like '*_portable.zip' -or $_.Extension -eq '.sha256' }
+          if ($files.Count -ne 2) { throw 'Expected one portable ZIP and one checksum' }
+          gh release upload "$env:TAG" @($files.FullName) --clobber
+          if ($LASTEXITCODE -ne 0) { throw 'Release upload failed' }
+      - name: Build macOS DMG
+        if: runner.os == 'macOS'
+        run: pnpm exec tauri build --target '${{ matrix.target }}' --bundles app,dmg --ci -- --locked
+        env:
+          APPLE_SIGNING_IDENTITY: '-'
+      - name: Upload macOS DMG and checksum
+        if: runner.os == 'macOS'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          for dmg in src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/*.dmg; do
+            shasum -a 256 "$dmg" > "$dmg.sha256"
+            gh release upload "$TAG" "$dmg" "$dmg.sha256" --clobber
+          done
+  publish:
+    needs: [prepare, build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publish complete release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: gh release edit "$TAG" --draft=false

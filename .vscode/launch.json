@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "键盘测试实用程序：桌面开发运行（热更新）",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "pnpm tauri:dev",
+      "cwd": "${workspaceFolder}",
+      "autoAttachChildProcesses": false
+    }
+  ]
+}

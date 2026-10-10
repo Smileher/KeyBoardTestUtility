@@ -1,0 +1,24 @@
+{
+  "version": "2.0.0",
+  "options": { "cwd": "${workspaceFolder}" },
+  "tasks": [
+    {
+      "label": "键盘测试实用程序：构建 Windows 便携版",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["portable"],
+      "problemMatcher": [],
+      "group": { "kind": "build", "isDefault": true },
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    },
+    {
+      "label": "键盘测试实用程序：运行网页版",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["dev"],
+      "problemMatcher": [],
+      "runOptions": { "instanceLimit": 1 },
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    }
+  ]
+}

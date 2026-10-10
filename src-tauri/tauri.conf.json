@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "KeyBoardTestUtility",
+  "version": "2.0.0",
+  "identifier": "54317Smileher.KeyBoardTestUtility",
+  "build": {
+    "frontendDist": "../dist",
+    "devUrl": "http://127.0.0.1:1420",
+    "beforeDevCommand": "pnpm dev",
+    "beforeBuildCommand": "pnpm build"
+  },
+  "app": {
+    "windows": [{ "label": "main", "title": "KeyBoardTestUtility", "width": 1160, "height": 660, "center": true, "resizable": false, "maximizable": false, "devtools": false, "zoomHotkeysEnabled": false }],
+    "security": { "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' ipc: http://ipc.localhost https://api.github.com; object-src 'none'; base-uri 'self'; form-action 'none'" }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["nsis", "dmg"],
+    "publisher": "Smileher",
+    "copyright": "Copyright © 2026 Smileher",
+    "icon": ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png", "icons/icon.ico", "icons/icon.icns"],
+    "windows": { "nsis": { "installMode": "currentUser", "languages": ["SimpChinese", "English"] } },
+    "macOS": { "minimumSystemVersion": "11.0" }
+  }
+}
