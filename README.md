@@ -1,16 +1,16 @@
 # KeyBoardTestUtility 2.0 · 键盘测试实用程序
 
-A compact keyboard and mouse tester, rebuilt with Vue 3 and Tauri 2. The online and desktop editions share the same interface and frontend source.
+A compact keyboard and mouse tester, rebuilt with Vue 3 and Tauri 2. The website has a short introduction and an online tester that shares the desktop frontend.
 
 [在线体验（中文）](https://smileher.github.io/KeyBoardTestUtility/?lang=zh-CN) · [Try online (English)](https://smileher.github.io/KeyBoardTestUtility/?lang=en) · [Desktop downloads](https://github.com/Smileher/KeyBoardTestUtility/releases/latest)
 
 ## Features
 
-- Full-size Windows and Apple keyboard layouts with a compact Win / Mac switch.
+- A stable 104-key layout; Win / Mac switches the Control, Command and Option legends without moving keys.
 - Live pressed, released and tested states, timestamps and hold durations; repeat events retain the original press time.
-- Three mouse buttons show pressed/released feedback for clicks anywhere in the test window.
-- Chinese and English, a top-bar system theme control and sun/moon switch, eight accents, circular theme transitions and accent fades.
-- Centered, fixed desktop window with a compact layout and no scrollbars; launching again focuses the existing instance.
+- Three mouse buttons show pressed/released feedback throughout the test window; tool buttons are excluded.
+- Chinese and English, a gradient sun/moon switch with a circular theme reveal and eight accents with fades. The initial theme follows the system until manually selected.
+- Centered, compact desktop window with title-bar dragging and no scrollbars; launching again focuses the existing instance.
 - Extra media/launcher keys are recorded with their raw key codes, even when absent from the keyboard layout.
 - Manual update checks, project links and author support.
 - No saved input history. Only appearance and language preferences are persisted.
@@ -25,7 +25,7 @@ A compact keyboard and mouse tester, rebuilt with Vue 3 and Tauri 2. The online 
 
 Esc is a test key and never closes the app. Switching away from the test page or losing focus pauses capture and clears held states. The Windows portable EXE uses the system **WebView2 Runtime**, which is not bundled. macOS releases currently use ad-hoc signing without Apple notarization; Mac hardware validation is still required. The Pages site becomes available after the workflow is deployed.
 
-The original [Microsoft Store listing](https://apps.microsoft.com/detail/9NKRGTGGQWSD) belongs to the WinUI edition. This rewrite does not publish a new Store package.
+Store upload packages preserve the original [Microsoft Store listing](https://apps.microsoft.com/detail/9NKRGTGGQWSD) identity. Uploading the generated MSIX bundle through Partner Center is a separate step.
 
 ## Development
 
@@ -51,7 +51,7 @@ See the [project guide](docs/PROJECT_GUIDE.md) for input behavior, build prerequ
 
 ## Release
 
-Keep all version declarations in sync, add `docs/releases/<version>.md`, then push a `v<version>` tag. GitHub Actions builds Windows x64 / ARM64 ZIPs and an Apple Silicon DMG, creates checksums, and publishes only after all builds succeed. Enable Pages with **GitHub Actions** as its source to deploy the shared frontend from `main`.
+Keep all version declarations in sync, add `docs/releases/<version>.md`, then push a `v<version>` tag. GitHub Actions builds Windows x64 / ARM64 portable files, a Store MSIX bundle and an Apple Silicon DMG, creates checksums, and publishes only after all builds succeed. Enable Pages with **GitHub Actions** as its source to deploy the shared frontend from `main`.
 
 ## Author and references
 

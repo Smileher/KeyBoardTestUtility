@@ -59,7 +59,7 @@ fn main() {
         .invoke_handler(tauri::generate_handler![runtime_info, set_capture])
         .setup(|app| {
             if let Some(window) = app.get_webview_window("main") {
-                browser::lock_position(&window)?;
+                browser::position_window(&window)?;
             }
             #[cfg(windows)]
             if let Some(window) = app.get_webview_window("main") {

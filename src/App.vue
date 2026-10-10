@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, onUnmounted, reactive, ref, watch } from 'vue'
-import { Keyboard, SlidersHorizontal, Info, Download, ExternalLink, Monitor, Sun, Moon } from '@lucide/vue'
+import { Keyboard, SlidersHorizontal, Info, Download, ExternalLink, Sun, Moon } from '@lucide/vue'
 import KeyboardView from './components/KeyboardView.vue'
 import MouseView from './components/MouseView.vue'
 import RecordView from './components/RecordView.vue'
@@ -16,7 +16,7 @@ import { installBrowserPolicy } from './browser-policy'
 
 const preferences = reactive(loadPreferences())
 const session = reactive(createSession())
-const view = ref<'test'|'settings'|'about'>('test')
+const view = ref<'home'|'test'|'settings'|'about'>(desktop || window.location.hash === '#test' ? 'test' : 'home')
 const platform = ref<PlatformLayout>(navigator.platform.startsWith('Mac') ? 'mac' : 'win')
 const focused = ref(document.hasFocus())
 const native = ref(false)
@@ -83,7 +83,14 @@ function keyboard(event: KeyboardEvent) {
   receive({ code: code && code !== 'Unidentified' ? code : `Key ${event.key} · ${event.keyCode}`, raw: `${event.code || event.key} · ${event.keyCode}`, down: event.type === 'keydown', repeat: event.repeat, at: Date.now(), monotonic: performance.now() })
 }
 function mouse(event: MouseEvent) {
-  if (!active.value) return
+  if (view.value !== 'test' || document.hidden) return
+  const code = `Mouse${event.button}`
+  // 工具按钮不参与测试；从测试区域按住后移到工具按钮松开，仍需解除按住状态。
+  if (event.type === 'mousedown') {
+    if (event.target instanceof Element && event.target.closest('button, a, input, select, textarea, [role="button"], [role="switch"]')) return
+    // 收到窗口内鼠标输入即表明当前可交互，避免顶层窗口与 WebView 焦点不同步漏记。
+    if (!focused.value) focus()
+  } else if (!session.pressed.has(code)) return
   receive({ code: `Mouse${event.button}`, down: event.type === 'mousedown', at: Date.now(), monotonic: performance.now() })
 }
 function focus() {
@@ -100,8 +107,8 @@ function visibility() { if (document.hidden) blur(); else if (!desktop && docume
 function persist() { saveError.value = !savePreferences(preferences) }
 function language(value: Language) { preferences.language = value; persist() }
 
-// 不支持快照动画或用户要求减少动态效果时，直接应用主题；操作始终只执行一次。
-async function animate(kind: 'theme'|'accent', origin: { x: number; y: number }, operation: () => void) {
+// 不支持快照或要求减少动态效果时直接应用；失败时也只执行一次设置操作。
+async function animateAppearance(kind: 'theme'|'accent', origin: { x: number; y: number }, operation: () => void) {
   if (!document.startViewTransition || window.matchMedia('(prefers-reduced-motion: reduce)').matches) { operation(); return }
   let applied = false
   const apply = async () => { if (!applied) { applied = true; operation() }; await nextTick() }
@@ -112,17 +119,17 @@ async function animate(kind: 'theme'|'accent', origin: { x: number; y: number },
       await transition.ready
       const radius = Math.hypot(Math.max(origin.x, window.innerWidth - origin.x), Math.max(origin.y, window.innerHeight - origin.y))
       const frames = kind === 'theme' ? { clipPath: [`circle(0px at ${origin.x}px ${origin.y}px)`, `circle(${radius}px at ${origin.x}px ${origin.y}px)`] } : { opacity: [0, 1] }
-      document.documentElement.animate(frames, { duration: kind === 'theme' ? 450 : 480, easing: 'ease-out', pseudoElement: '::view-transition-new(root)' })
+      await document.documentElement.animate(frames, { duration: kind === 'theme' ? 900 : 480, easing: 'cubic-bezier(.4, 0, .2, 1)', pseudoElement: '::view-transition-new(root)' }).finished
     } catch { /* 快照不可用时保持已应用的设置。 */ }
     await transition.finished.catch(() => {})
   } catch { await apply() } finally { document.documentElement.classList.remove('appearance-changing') }
 }
 function appearance(kind: 'theme'|'accent', value: Theme | Accent, event: MouseEvent) {
   const rect = (event.currentTarget as HTMLElement).getBoundingClientRect()
-  const origin = { x: event.detail ? event.clientX : rect.left + rect.width / 2, y: event.detail ? event.clientY : rect.top + rect.height / 2 }
+  const origin = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 }
   appearanceQueue = appearanceQueue.then(async () => {
     if (preferences[kind] === value || disposed) return
-    await animate(kind, origin, () => {
+    await animateAppearance(kind, origin, () => {
       if (kind === 'theme') preferences.theme = value as Theme
       else preferences.accent = value as Accent
       persist()
@@ -133,7 +140,7 @@ function systemTheme(event: MediaQueryListEvent) {
   appearanceQueue = appearanceQueue.then(async () => {
     if (disposed) return
     if (preferences.theme !== 'system') { systemDark.value = event.matches; return }
-    await animate('theme', { x: window.innerWidth / 2, y: window.innerHeight / 2 }, () => systemDark.value = event.matches)
+    systemDark.value = event.matches
   })
 }
 async function downloads() { try { await visit(`${projectUrl}/releases/latest`) } catch { view.value = 'about' } }
@@ -184,11 +191,10 @@ onUnmounted(() => {
 <template>
   <div class="app-shell">
     <header class="app-header">
-      <div class="brand"><img :src="brand" alt="" /><strong>{{ t('appName') }}</strong></div>
+      <div class="brand"><img :src="brand" alt="" /><button v-if="!desktop" type="button" class="brand-home" @click="view = 'home'">{{ t('appName') }}</button><strong v-else>{{ t('appName') }}</strong></div>
       <nav :aria-label="t('test')"><button v-for="item in ['test','settings','about'] as const" :key="item" type="button" :class="{ selected: view === item }" :aria-current="view === item ? 'page' : undefined" @click="view = item"><component :is="item === 'test' ? Keyboard : item === 'settings' ? SlidersHorizontal : Info" :size="15" /><span>{{ t(item) }}</span></button></nav>
       <div class="theme-control" :aria-label="t('appearance')">
-        <button type="button" class="system-theme" :aria-pressed="preferences.theme === 'system'" :title="t('system')" :aria-label="t('system')" @click="appearance('theme', preferences.theme === 'system' ? currentTheme : 'system', $event)"><Monitor :size="15" /><span>{{ t('system') }}</span></button>
-        <button type="button" class="theme-toggle" :class="{ dark: currentTheme === 'dark' }" :aria-label="t(currentTheme === 'dark' ? 'light' : 'dark')" :title="t(currentTheme === 'dark' ? 'light' : 'dark')" @click="appearance('theme', currentTheme === 'dark' ? 'light' : 'dark', $event)"><Sun class="theme-sun" :size="15" /><Moon class="theme-moon" :size="14" /><span class="theme-thumb"><component :is="currentTheme === 'dark' ? Moon : Sun" :size="15" /></span></button>
+        <button type="button" role="switch" class="theme-toggle" :class="{ dark: currentTheme === 'dark' }" :aria-checked="currentTheme === 'dark'" :aria-label="t('dark')" :title="t(currentTheme === 'dark' ? 'light' : 'dark')" @click="appearance('theme', currentTheme === 'dark' ? 'light' : 'dark', $event)"><Sun class="theme-sun" :size="18" aria-hidden="true" /><Moon class="theme-moon" :size="17" aria-hidden="true" /><span class="theme-thumb" /></button>
       </div>
     </header>
     <main class="content" :class="{ 'test-content': view === 'test' }">
@@ -197,6 +203,10 @@ onUnmounted(() => {
         <div class="lower-grid"><MouseView :session="session" :language="preferences.language" /><RecordView :session="session" :platform="platform" :language="preferences.language" @clear="session.records.length = 0" /></div>
         <footer class="test-footer"><span class="capture-status"><i :class="{ active }" />{{ t(!active ? 'paused' : native ? 'nativeMode' : 'webMode') }}</span><button v-if="!desktop" type="button" class="link-button" @click="downloads"><Download :size="13" />{{ t('desktopDownloads') }}<ExternalLink :size="11" /></button><span v-if="nativeError" role="status">{{ t('unavailable') }}</span><span v-else-if="lostFocus" role="status">{{ t('lostFocus') }}</span></footer>
       </template>
+      <section v-else-if="view === 'home'" class="home-page">
+        <div class="home-intro"><span class="home-eyebrow">KeyBoardTestUtility · 2.0</span><h1>{{ t('tagline') }}</h1><p>{{ t('homeDescription') }}</p><div class="home-actions"><button type="button" class="button primary-button" @click="view = 'test'"><Keyboard :size="17" />{{ t('onlineTest') }}</button><button type="button" class="button" @click="downloads"><Download :size="17" />{{ t('desktopDownloads') }}</button></div><span class="home-platforms">Windows · macOS · Web</span></div>
+        <KeyboardView class="home-preview" :platform="platform" :session="session" :language="preferences.language" :locks="locks" preview />
+      </section>
       <SettingsView v-else-if="view === 'settings'" :preferences="preferences" :save-error="saveError" @accent="(value, event) => appearance('accent', value, event)" @language="language" />
       <AboutView v-else :language="preferences.language" :store="store" />
     </main>

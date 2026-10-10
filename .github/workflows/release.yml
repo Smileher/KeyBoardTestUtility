@@ -69,17 +69,27 @@ jobs:
         if: runner.os == 'Windows'
         run: ./scripts/build-portable.ps1 -Architecture '${{ matrix.arch }}'
         shell: pwsh
-      - name: Upload Windows ZIP and checksum
+      - name: Upload Windows portable files
         if: runner.os == 'Windows'
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ github.ref_name }}
         run: |
           $version = (Get-Content -LiteralPath package.json -Raw -Encoding UTF8 | ConvertFrom-Json).version
-          $files = Get-ChildItem -LiteralPath "artifacts/$version" -File | Where-Object { $_.Name -like '*_portable.zip' -or $_.Extension -eq '.sha256' }
-          if ($files.Count -ne 2) { throw 'Expected one portable ZIP and one checksum' }
+          $files = Get-ChildItem -LiteralPath "artifacts/$version" -File | Where-Object { $_.Name -like '*_portable.zip' -or $_.Extension -in '.sha256','.exe' }
+          if ($files.Count -ne 3) { throw 'Expected one portable EXE, ZIP and checksum' }
           gh release upload "$env:TAG" @($files.FullName) --clobber
           if ($LASTEXITCODE -ne 0) { throw 'Release upload failed' }
+      - name: Build Store upload package
+        if: runner.os == 'Windows'
+        run: ./scripts/build-store.ps1 -Architecture '${{ matrix.arch }}' -SkipBuild
+        shell: pwsh
+      - uses: actions/upload-artifact@v4
+        if: runner.os == 'Windows'
+        with:
+          name: store-${{ matrix.arch }}
+          path: artifacts/*/store/*.msix
+          if-no-files-found: error
       - name: Build macOS DMG
         if: runner.os == 'macOS'
         run: pnpm exec tauri build --target '${{ matrix.target }}' --bundles app,dmg --ci -- --locked
@@ -95,8 +105,28 @@ jobs:
             shasum -a 256 "$dmg" > "$dmg.sha256"
             gh release upload "$TAG" "$dmg" "$dmg.sha256" --clobber
           done
-  publish:
+  store:
     needs: [prepare, build]
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: store-*
+          path: store-packages
+          merge-multiple: true
+      - name: Bundle and upload Store packages
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          ./scripts/bundle-store.ps1 -InputDirectory store-packages -OutputDirectory store-output
+          $files = Get-ChildItem -LiteralPath store-output -File
+          gh release upload "$env:TAG" @($files.FullName) --clobber
+          if ($LASTEXITCODE -ne 0) { throw 'Store bundle upload failed' }
+  publish:
+    needs: [prepare, build, store]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

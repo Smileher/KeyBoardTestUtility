@@ -6,11 +6,11 @@
   "build": {
     "frontendDist": "../dist",
     "devUrl": "http://127.0.0.1:1420",
-    "beforeDevCommand": "pnpm dev",
+    "beforeDevCommand": "node scripts/dev-server.mjs",
     "beforeBuildCommand": "pnpm build"
   },
   "app": {
-    "windows": [{ "label": "main", "title": "KeyBoardTestUtility", "width": 1160, "height": 660, "center": true, "resizable": false, "maximizable": false, "devtools": false, "zoomHotkeysEnabled": false }],
+    "windows": [{ "label": "main", "title": "KeyBoardTestUtility", "width": 1020, "height": 540, "center": true, "resizable": false, "maximizable": false, "devtools": false, "zoomHotkeysEnabled": false }],
     "security": { "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' ipc: http://ipc.localhost https://api.github.com; object-src 'none'; base-uri 'self'; form-action 'none'" }
   },
   "bundle": {

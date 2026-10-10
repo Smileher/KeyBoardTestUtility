@@ -2,6 +2,7 @@ import type { Language } from './core/preferences'
 
 const en = {
   appName: 'KeyBoardTestUtility',
+  onlineTest: 'Try online', homeDescription: 'A compact keyboard and mouse tester. See every press, release and hold, with Windows and Mac layouts. Open it in your browser or download the desktop app.',
   test: 'Input test', settings: 'Settings', about: 'About', keyboard: 'Keyboard', mouse: 'Mouse',
   reset: 'Reset test', clear: 'Clear', records: 'Live input', empty: 'Press a key or click anywhere in this window.',
   untested: 'Untested', tested: 'Triggered', pressed: 'Pressed', down: 'Down', up: 'Up', repeat: 'Repeat',
@@ -28,6 +29,7 @@ const en = {
 type MessageKey = keyof typeof en
 const zh: Record<MessageKey, string> = {
   appName: '键盘测试实用程序',
+  onlineTest: '在线测试', homeDescription: '一个轻巧的键盘与鼠标测试工具。直观看到按下、抬起和按住时长，支持 Windows / Mac 键盘布局。浏览器即开即用，也可下载桌面版。',
   test: '输入测试', settings: '设置', about: '关于', keyboard: '键盘', mouse: '鼠标',
   reset: '重置测试', clear: '清空', records: '即时记录', empty: '按下键盘，或在窗口内任意位置点击鼠标。',
   untested: '未测试', tested: '已触发', pressed: '正在按下', down: '按下', up: '抬起', repeat: '重复',

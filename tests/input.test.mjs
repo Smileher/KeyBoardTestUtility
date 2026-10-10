@@ -48,6 +48,17 @@ test('full-size layouts have unique testable positions and firmware Fn is exclud
     assert.equal(keys.some(key=>key.code==='MetaRight'),true)
   }
 })
+
+test('Mac mode changes only modifier legends and retains positions, geometry and progress', () => {
+  const win = keyboardLayout('win')
+  const mac = keyboardLayout('mac')
+  const positions = layout => [...layout.main.flat(), ...layout.navigation.flat(), ...layout.numpad]
+  const winKeys = positions(win)
+  const macKeys = positions(mac)
+  assert.equal(detectableKeys(mac).length, 104)
+  assert.deepEqual(macKeys.map(({ label, ...position }) => position), winKeys.map(({ label, ...position }) => position))
+  assert.deepEqual(macKeys.filter((key, i) => key.label !== winKeys[i].label).map(key => key.code), ['ControlLeft', 'MetaLeft', 'AltLeft', 'AltRight', 'MetaRight', 'ControlRight'])
+})
 test('release comparisons use semantic numeric order and reject prereleases', () => {
   assert.equal(isNewerVersion('v2.10.0','2.9.0'),true)
   assert.equal(isNewerVersion('v1.0.0','2.0.0'),false)

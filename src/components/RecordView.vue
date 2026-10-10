@@ -12,7 +12,7 @@ const visibleRows = ref(4)
 let resize: ResizeObserver | undefined
 onMounted(() => {
   resize = new ResizeObserver(([entry]) => {
-    if (entry) visibleRows.value = Math.max(0, Math.floor((entry.contentRect.height - 26) / 32))
+    if (entry) visibleRows.value = Math.max(0, Math.floor((entry.contentRect.height - 26) / 28))
   })
   if (container.value) resize.observe(container.value)
 })
