@@ -1,6 +1,6 @@
 [package]
 name = "keyboard-test-utility"
-version = "2.0.0"
+version = "3.0.0"
 description = "A portable keyboard and mouse input tester"
 authors = ["Smileher"]
 edition = "2021"

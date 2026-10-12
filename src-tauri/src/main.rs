@@ -45,6 +45,12 @@ fn set_capture(active: bool) {
     let _ = active;
 }
 
+#[tauri::command]
+fn set_window_theme(window: tauri::WebviewWindow, theme: Option<tauri::Theme>) -> Result<(), String> {
+    // None 表示跟随系统；原生主题只通过当前窗口这一处写入。
+    window.set_theme(theme).map_err(|error| error.to_string())
+}
+
 fn main() {
     let app = tauri::Builder::default()
         .plugin(tauri_plugin_single_instance::init(|app, _, _| {
@@ -56,7 +62,7 @@ fn main() {
         }))
         .plugin(browser::init())
         .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![runtime_info, set_capture])
+        .invoke_handler(tauri::generate_handler![runtime_info, set_capture, set_window_theme])
         .setup(|app| {
             if let Some(window) = app.get_webview_window("main") {
                 browser::position_window(&window)?;

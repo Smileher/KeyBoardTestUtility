@@ -1,6 +1,10 @@
+export function isEditable(target: EventTarget | null): boolean {
+  return target instanceof Element && !!target.closest('input, textarea, select, [contenteditable="true"]')
+}
 export function installBrowserPolicy(): () => void {
-  const prevent = (event: Event) => event.preventDefault()
+  const prevent = (event: Event) => { if (!isEditable(event.target)) event.preventDefault() }
   const keyboard = (event: KeyboardEvent) => {
+    if (isEditable(event.target)) return
     const command = event.ctrlKey || event.metaKey
     const key = event.key.toLowerCase()
     if (['F1','F3','F5','F6','F7','F11','F12','ContextMenu','BrowserBack','BrowserForward','BrowserRefresh','BrowserHome'].includes(event.key)

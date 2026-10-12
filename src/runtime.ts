@@ -3,6 +3,7 @@ import { listen, type UnlistenFn } from '@tauri-apps/api/event'
 import { getCurrentWindow } from '@tauri-apps/api/window'
 import { openUrl } from '@tauri-apps/plugin-opener'
 import type { InputEvent } from './core/session'
+import type { Theme } from './core/preferences'
 
 export const desktop = isTauri()
 export const projectUrl = 'https://github.com/Smileher/KeyBoardTestUtility'
@@ -18,6 +19,9 @@ export async function nativeInputs(callback: (input: InputEvent) => void): Promi
 }
 export async function setCapture(active: boolean): Promise<void> {
   if (desktop) await invoke('set_capture', { active })
+}
+export async function setWindowTheme(theme: Theme): Promise<void> {
+  if (desktop) await invoke('set_window_theme', { theme: theme === 'system' ? null : theme })
 }
 export async function desktopFocus(callback: (focused: boolean) => void): Promise<UnlistenFn> {
   const window = getCurrentWindow()

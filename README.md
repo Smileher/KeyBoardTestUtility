@@ -1,4 +1,4 @@
-# KeyBoardTestUtility 2.0 · 键盘测试实用程序
+# KeyBoardTestUtility 3.0 · 键盘测试实用程序
 
 A compact keyboard and mouse tester, rebuilt with Vue 3 and Tauri 2. The website has a short introduction and an online tester that shares the desktop frontend.
 
@@ -6,14 +6,18 @@ A compact keyboard and mouse tester, rebuilt with Vue 3 and Tauri 2. The website
 
 ## Features
 
-- A stable 104-key layout; Win / Mac switches the Control, Command and Option legends without moving keys.
+- Seven focused categories: keys, chatter, rollover, dropouts, event delay, typing and mouse, each with a short explanation.
+- US ANSI, UK ISO, German QWERTZ, French AZERTY and Japanese JIS layouts, with distinct Windows and Mac geometry. Mac modifiers show both symbols and English names.
 - Live pressed, released and tested states, timestamps and hold durations; repeat events retain the original press time.
-- Three mouse buttons show pressed/released feedback throughout the test window; tool buttons are excluded.
-- Chinese and English, a gradient sun/moon switch with a circular theme reveal and eight accents with fades. The initial theme follows the system until manually selected.
-- Centered, compact desktop window with title-bar dragging and no scrollbars; launching again focuses the existing instance.
+- Five mouse buttons show feedback in a dedicated test area; tool buttons are excluded. Event records are collapsed by default and scroll when expanded.
+- Simplified Chinese, Traditional Chinese, English, German, French, Japanese, Korean and Spanish. Interface language is independent of the physical keyboard layout.
+- The original gradient sun/moon switch, circular theme reveal and eight accents with fades. Native Windows/macOS title bars follow the theme preference.
+- A centered, resizable desktop window; launching again focuses the existing instance. Smaller windows can scroll the keyboard without shrinking key legends beyond readability.
 - Extra media/launcher keys are recorded with their raw key codes, even when absent from the keyboard layout.
 - Manual update checks, project links and author support.
-- No saved input history. Only appearance and language preferences are persisted.
+- No saved input history. Only appearance, language, platform and layout preferences are persisted.
+
+Chatter and dropout reports indicate suspected short release–press gaps, not a definitive hardware diagnosis. Event delay measures browser event handling or native hook forwarding, with separate clocks and statistics; it is not total keyboard hardware latency. Typing supports normal editing and input methods, and does not add typed text to event records.
 
 ## Desktop and web
 
@@ -57,6 +61,6 @@ Keep all version declarations in sync, add `docs/releases/<version>.md`, then pu
 
 Created by **Smileher / ChenHe**. Keyboard visuals draw inspiration from [keyboardtest.cn](https://www.keyboardtest.cn/), event records from [便民查询网](https://keyboard.bmcx.com/), and settings / About interactions from [RemindOn](https://github.com/Smileher/RemindOn).
 
-[Privacy policy](PrivacyPolicy.md) · [2.0.0 release notes](docs/releases/2.0.0.md)
+[Privacy policy](PrivacyPolicy.md) · [3.0.0 release notes](docs/releases/3.0.0.md)
 
 The former WinUI implementation remains in Git history; the current source tree contains only the rewrite. The repository name `KeyBoardTestUtility`, application names, identity `54317Smileher.KeyBoardTestUtility`, and Store ID `9NKRGTGGQWSD` are preserved. A portable EXE has no MSIX package identity; publishing a Store package remains a separate step.

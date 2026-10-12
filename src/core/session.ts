@@ -1,5 +1,5 @@
 export type InputAction = 'down' | 'up' | 'repeat'
-export type InputEvent = { code: string; raw?: string; down: boolean; repeat?: boolean; at: number; monotonic: number }
+export type InputEvent = { code: string; raw?: string; down: boolean; repeat?: boolean; at: number; monotonic: number; source?: 'browser' | 'native'; dispatchDelayMs?: number }
 export type InputRecord = { id: number; code: string; raw?: string; action: InputAction; at: number; duration?: number }
 export type Session = {
   pressed: Map<string, number>

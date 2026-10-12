@@ -1,6 +1,6 @@
 # Project guide
 
-KeyBoardTestUtility 2.0 uses one Vue frontend for the online and Tauri desktop editions. Input records and tested keys exist only in memory. Only language, theme and accent preferences are persisted in WebView/browser local storage.
+KeyBoardTestUtility 3.0 uses one Vue frontend for the online and Tauri desktop editions. Input records, diagnostic results and typed text exist only in memory. Only language, theme, accent, platform and physical-layout preferences are persisted in WebView/browser local storage.
 
 ## Develop
 
@@ -19,20 +19,30 @@ In VS Code, press **F5** and select **键盘测试实用程序：桌面开发运
 
 The web task and desktop launcher reuse an existing Vite server on port 1420 after checking the project name and version. A different application on that port causes a clear error and is never terminated automatically. If you started the web task separately, stop that task separately when finished.
 
-`pnpm dev` opens a short product introduction with an online test entry. `#test` opens the tester directly. Desktop-only code is gated at runtime. The same source implements both layouts, themes, mouse feedback and records; the introduction also reuses the keyboard component.
+`pnpm dev` opens a short product introduction with an online test entry. `#test` opens the tester directly. Desktop-only code is gated at runtime. The same source implements all five regional layouts for Windows and Mac; the introduction also reuses the keyboard component. The desktop edition enters key testing directly.
 
 ## Input behavior
 
 - Capture is active only on the test page while the application is focused. Esc is a test key and never closes the application.
 - Windows uses a low-level keyboard hook with its own message loop. It checks the foreground window on every callback; switching windows immediately restores ordinary input. Alt+Tab remains available. Lock keys continue to update the real system state.
 - Native key positions use scan codes and the extended flag, so numpad navigation with NumLock off remains distinct from the navigation block. Media/launcher and unknown keys are also recorded with raw VK/scan codes. The hook forwards events through a queue to avoid blocking its message loop.
-- Web and macOS editions use window keyboard events. Browser/OS reserved keys, Fn and Touch ID are not guaranteed to be available. Both modes use the same 104-key layout; Mac mode only changes the six Control, Command and Option legends. Fn is omitted. Apple-specific extra keys still appear in records when received.
-- Left, middle and right mouse buttons respond throughout the test window, excluding tool buttons and other interactive controls. Releasing over a tool button still clears a press that started in the test area. Side buttons are recorded too. Mouse and trackpad hardware cannot be reliably distinguished at this layer.
+- Web and macOS editions use window keyboard events. Browser/OS reserved keys are not guaranteed to be available. Fn and Touch ID are displayed but excluded from progress. Physical `code` values identify positions independently of input characters; QWERTZ/AZERTY legends do not remap the event codes. ISO/JIS use tall return keys. Mac layouts have their own modifier order, F13–F19 and numpad geometry. Apple JIS moves control into the letter area and Fn to the bottom right. Windows JIS scan codes distinguish IntlRo, IntlYen and conversion keys.
+- Mouse testing is a separate category. Left, middle, right, back and forward buttons respond only within its test area, excluding tool buttons and other interactive controls. Releasing over a tool button still clears a press that started in the test area. Mouse and trackpad hardware cannot be reliably distinguished at this layer.
 - Hold durations use monotonic clocks. System auto-repeat does not restart the original press time. Focus loss clears pressed states without fabricating releases or hold durations.
-- Records are capped at 1,000 per session; the newest rows that fit the panel height are rendered without scrolling. Clear removes records; Reset also clears tested and pressed states.
-- Browser actions such as selection, drag/drop, context menus, printing, refresh, zoom gestures and developer shortcuts are suppressed where the browser permits. WebView2 accelerator keys and developer tools are also disabled natively. Webpages cannot override every browser or operating system shortcut.
+- Each category has its own session. Records are capped at 1,000 per session and collapsed by default; expanded records scroll. Clear removes records; Reset also clears tested and pressed states and the current diagnostic results.
+- Browser actions such as selection, drag/drop, context menus, printing, refresh, zoom gestures and developer shortcuts are suppressed outside editable controls where the browser permits. Text inputs retain normal editing and IME behavior. Native capture is disabled during typing and while an editable control has focus. WebView2 accelerator keys and developer tools remain disabled natively. Webpages cannot override every browser or operating system shortcut.
 
-The desktop window starts centered at up to 1020 × 540 logical pixels and shrinks to fit the monitor work area. Title-bar dragging is enabled; resizing remains disabled. A second launch brings the existing instance to the foreground. Larger keycaps sit above a 100-pixel mouse/record section; the table renders the newest rows that fit. Light keycaps have a raised edge and shadow. Windows/Command positions show Windows/Apple icons. The top bar has a gradient sun/moon switch; the new theme expands from the button center over 900 ms. Reduced motion or unavailable View Transitions apply the theme directly. The default follows the system until a theme is manually selected and saved.
+The desktop window starts centered at up to 1120 × 720 logical pixels and shrinks to fit the monitor work area. Native title bars, resizing and maximizing are enabled. A second launch brings the existing instance to the foreground. The top navigation selects one test at a time; mouse and records no longer occupy permanent space under the keyboard. Light keycaps have a raised edge and shadow. Windows keys show a Windows icon; Mac modifiers show symbols and English names. The top bar retains its gradient sun/moon switch; the new theme expands from the button center over 900 ms. Reduced motion or unavailable View Transitions apply the theme directly. The default follows the system until a theme is manually selected and saved; Settings can restore system following. Native window theme synchronization uses the preference, so system following also applies to the title bar.
+
+## Diagnostic measurements
+
+- Chatter flags an observed release followed by a new press within the selected 30–150 ms threshold. OS repeat is excluded. Intentionally fast tapping can also be flagged.
+- Rollover shows the current/peak held count and whether a selected combination was detected simultaneously. Users can record a custom combination. A peak count alone does not prove full NKRO.
+- Dropouts require an explicit start and monitor the first newly pressed key. Short release–press gaps are suspected interruptions; missing events cannot be reliably distinguished from intentional release. Losing focus or leaving the category stops the run and discards pending pairs.
+- Event delay maintains separate latest-100-sample statistics for browser and native input. Browser timestamps are normalized against `performance.timeOrigin` when needed, then compared with handler time. Native timestamps use `Instant` from hook entry to just before forwarding, excluding IPC and rendering. Neither represents switch actuation, USB polling, or total hardware latency.
+- Typing measures correct Unicode characters per minute and positional accuracy against a localized passage. It supports normal editing and composition, pauses on blur, and resets when the interface language changes. Typed text is not added to keyboard event records.
+
+Anomaly history is capped at 100 entries and pending key-release pairs at 200. Focus loss, category changes and input-source fallback clear pairing without inventing releases. Builds and simulated input do not establish real Mac hardware behavior; region-specific hardware and input methods still need manual validation.
 
 ## Build and distribution
 
@@ -56,6 +66,6 @@ Version strings in `package.json`, `Cargo.toml`, `Cargo.lock` and `tauri.conf.js
 
 Updates are checked manually against the latest stable GitHub Release. The application opens the release downloads; it does not replace its own EXE or install downloaded code. Existing Windows package identity selects the Store-managed update UI and the original Store listing. GitHub releases include an upload bundle; Store submission and certification remain separate.
 
-Enable GitHub Pages with **GitHub Actions** as its source. The Pages workflow builds the same frontend with `/KeyBoardTestUtility/` as its base path. `?lang=en` or `?lang=zh-CN` selects the initial language. Run a Pages build locally with `GITHUB_PAGES=1 pnpm build` using the shell's environment-variable syntax.
+Enable GitHub Pages with **GitHub Actions** as its source. The Pages workflow builds the same frontend with `/KeyBoardTestUtility/` as its base path. `?lang=` accepts `zh-CN`, `zh-TW`, `en`, `de`, `fr`, `ja`, `ko` and `es`; otherwise the saved or browser language is used. Run a Pages build locally with `GITHUB_PAGES=1 pnpm build` using the shell's environment-variable syntax.
 
 The old WinUI implementation remains available in Git history. Its local project files have been removed with the owner's approval. The repository retains its original name `KeyBoardTestUtility`; the software retains the original English name `KeyBoardTestUtility`, Chinese name `键盘测试实用程序`, identity `54317Smileher.KeyBoardTestUtility`, and Store ID `9NKRGTGGQWSD`. Portable builds have no MSIX identity. Store packages preserve publisher `CN=426E8CF5-3861-440D-B400-CDB0323C5FD4` and application ID `App` from the original manifest.

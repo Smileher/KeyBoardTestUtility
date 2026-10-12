@@ -1886,7 +1886,7 @@ dependencies = [
 
 [[package]]
 name = "keyboard-test-utility"
-version = "2.0.0"
+version = "3.0.0"
 dependencies = [
  "objc2",
  "serde",

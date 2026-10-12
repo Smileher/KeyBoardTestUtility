@@ -4,8 +4,8 @@ pub fn position_window(window: &tauri::WebviewWindow) -> Result<(), Box<dyn std:
         let scale = monitor.scale_factor();
         // 按逻辑像素适配工作区，为任务栏、标题栏和高 DPI 留出空间。
         window.set_size(tauri::LogicalSize::new(
-            1020.0_f64.min((area.size.width as f64 / scale - 32.0).max(1.0)),
-            540.0_f64.min((area.size.height as f64 / scale - 64.0).max(1.0)),
+            1120.0_f64.min((area.size.width as f64 / scale - 32.0).max(1.0)),
+            720.0_f64.min((area.size.height as f64 / scale - 64.0).max(1.0)),
         ))?;
     }
     window.center()?;

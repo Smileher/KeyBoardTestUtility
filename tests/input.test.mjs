@@ -1,7 +1,7 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { createSession, acceptInput, releaseInputs, resetSession, normalizeBrowserCode, RECORD_LIMIT, isNewerVersion } from '../src/core/session.ts'
-import { keyboardLayout, detectableKeys } from '../src/core/layouts.ts'
+import { keyboardLayout, detectableKeys, layoutIds } from '../src/core/layouts.ts'
 
 test('holds use monotonic elapsed time and repetitions do not restart the timer', () => {
   const session = createSession()
@@ -41,23 +41,28 @@ test('numpad navigation remains distinct and main navigation remains unchanged',
 test('full-size layouts have unique testable positions and firmware Fn is excluded', () => {
   const win=detectableKeys(keyboardLayout('win'))
   assert.equal(win.length,104)
-  for(const platform of ['win','mac']) {
-    const keys=detectableKeys(keyboardLayout(platform))
+  for(const platform of ['win','mac']) for(const region of layoutIds) {
+    const keys=detectableKeys(keyboardLayout(platform, region))
     assert.equal(new Set(keys.map(key=>key.code)).size,keys.length)
     assert.equal(keys.some(key=>key.code==='Fn'),false)
     assert.equal(keys.some(key=>key.code==='MetaRight'),true)
   }
 })
 
-test('Mac mode changes only modifier legends and retains positions, geometry and progress', () => {
+test('Mac full-size geometry includes its own modifiers, function keys and numpad', () => {
   const win = keyboardLayout('win')
   const mac = keyboardLayout('mac')
   const positions = layout => [...layout.main.flat(), ...layout.navigation.flat(), ...layout.numpad]
   const winKeys = positions(win)
   const macKeys = positions(mac)
-  assert.equal(detectableKeys(mac).length, 104)
-  assert.deepEqual(macKeys.map(({ label, ...position }) => position), winKeys.map(({ label, ...position }) => position))
-  assert.deepEqual(macKeys.filter((key, i) => key.label !== winKeys[i].label).map(key => key.code), ['ControlLeft', 'MetaLeft', 'AltLeft', 'AltRight', 'MetaRight', 'ControlRight'])
+  assert.notDeepEqual(macKeys.map(({ label, ...position }) => position), winKeys.map(({ label, ...position }) => position))
+  assert.equal(mac.main[5][0].code, 'Fn')
+  assert.equal(mac.main[5][1].code, 'ControlLeft')
+  assert.equal(macKeys.find(key => key.code === 'AltLeft').label, '⌥ option')
+  assert.equal(macKeys.find(key => key.code === 'MetaLeft').label, '⌘ command')
+  for(const code of ['F13', 'F19', 'NumpadEqual']) assert.ok(detectableKeys(mac).some(key => key.code === code))
+  assert.equal(macKeys.find(key => key.code === 'NumpadAdd').height, 1)
+  assert.equal(macKeys.find(key => key.code === 'TouchID').detectable, false)
 })
 test('release comparisons use semantic numeric order and reject prereleases', () => {
   assert.equal(isNewerVersion('v2.10.0','2.9.0'),true)
